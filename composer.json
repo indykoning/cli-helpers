@@ -1,0 +1,16 @@
+{
+    "name": "indykoning/cli-helpers",
+    "description": "Some helper cli scripts to speed up development",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Indy Koning"
+        }
+    ],
+    "bin": [
+        "bin/db-automysqlbackup",
+        "bin/db-magerun",
+        "bin/magepack-generate"
+    ],
+    "require": {}
+}
