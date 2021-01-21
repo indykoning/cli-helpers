@@ -22,9 +22,9 @@ scp root@${REMOTE_SERVER_IP}:/var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATA
 [ -f ${latest_dump} ] || echo "Could not download dump!"
 
 # OSX uses gzcat, unix uses zcat.
-command -v gzcat > /dev/null && zcat='gzcat' || zcat='zcat'
+command -v gzcat &> /dev/null && zcat='gzcat' || zcat='zcat'
 # Use PV if available to display progress bar.
-command -v pv > /dev/null && pv='pv' || pv='cat'
+command -v pv &> /dev/null && pv='pv' || pv='cat'
 
 # Import database.
 echo "Importing"
