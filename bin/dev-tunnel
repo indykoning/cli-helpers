@@ -6,7 +6,7 @@
 
 if ! command -v sshfs &> /dev/null
 then
-    echo "ERROR: OSXFUSE not installed"
+    echo 'ERROR: OSXFUSE not installed, try running "brew cask install osxfuse && brew install sshfs"'
     exit
 fi
 
