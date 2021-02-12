@@ -5,7 +5,7 @@
 [ -f .env ] && source .env
 
 # Verify required values are available.
-required_values=(REMOTE_SERVER_IP REMOTE_SERVER_USER REMOTE_SERVER_PATH)
+required_values=(REMOTE_SERVER_IP REMOTE_SERVER_USER REMOTE_SERVER_PATH REMOTE_SERVER_PORT)
 for required_value in ${required_values[@]}; do
     [ -z ${!required_value} ] && echo "${required_value} is missing!" && exit
 done
@@ -14,7 +14,7 @@ done
 MAGERUN_STRIP="${MAGERUN_STRIP:-@stripped @log @2fa @aggregated @idx @quotes @replica @sales @search @sessions @trade}"
 
 echo "Downloading database from remote and stripping '${MAGERUN_STRIP}'"
-ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; magerun2 db:dump --strip=\"${MAGERUN_STRIP}\" --stdout 2> /dev/null" > dump.sql
+ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; magerun2 db:dump --strip=\"${MAGERUN_STRIP}\" --stdout 2> /dev/null" > dump.sql
 magerun2 db:import dump.sql
 rm dump.sql
 
