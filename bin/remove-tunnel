@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+[ -f app/etc/.env ] && source app/etc/.env
+[ -f .env ] && source .env
+LOCAL_FOLDER="pub/media"
+PATH_TO_PROJECT=$(pwd)
+# echo "$LOCAL_FOLDER"
+
+processes=$(ps aux | grep $REMOTE_SERVER_USER)
+complete_path=$PATH_TO_PROJECT"/"$LOCAL_FOLDER
+echo "Unmounted $complete_path"
+umount $complete_path

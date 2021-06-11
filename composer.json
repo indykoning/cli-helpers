@@ -11,7 +11,8 @@
         "bin/db-automysqlbackup",
         "bin/db-magerun",
         "bin/magepack-generate",
-        "bin/dev-tunnel"
+        "bin/dev-tunnel",
+        "bin/remove-tunnel"
     ],
     "require": {}
 }
