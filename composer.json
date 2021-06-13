@@ -12,7 +12,8 @@
         "bin/db-magerun",
         "bin/magepack-generate",
         "bin/dev-tunnel",
-        "bin/remove-tunnel"
+        "bin/remove-tunnel",
+        "bin/list-tunnels"
     ],
     "require": {}
 }

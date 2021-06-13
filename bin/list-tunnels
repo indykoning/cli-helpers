@@ -1,0 +1,6 @@
+#!/bin/bash
+
+tunnels=$(ps aux | grep -i sftp | grep -v grep | sed -e 's/-2\(.*\)@/\1/')
+
+echo $tunnels
+
