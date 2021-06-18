@@ -15,7 +15,7 @@ HELP+=|\\n
 media-link:
 	bash $(current_dir)/mk/scripts/dev-tunnel.sh
 media-list:
-	mount | grep "osxfuse"
+	mount | grep 'osxfuse\|macfuse'
 media-unlink:
 	umount ./pub/media
 	@echo "Media unmounted"
