@@ -17,4 +17,3 @@ echo "Downloading database from remote and stripping '${MAGERUN_STRIP}'"
 ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; magerun2 db:dump --strip=\"${MAGERUN_STRIP}\" --stdout 2> /dev/null" > dump.sql
 magerun2 db:import dump.sql
 rm dump.sql
-
