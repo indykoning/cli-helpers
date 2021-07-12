@@ -10,6 +10,9 @@ then
     exit
 fi
 
+if [ -d "./public/app/uploads" ]; then DIR="public/app/uploads"; fi
+if [ -d "./pub/media" ]; then DIR="pub/media"; fi
+
 # Verify required values are available.
 required_values=(REMOTE_SERVER_IP REMOTE_SERVER_USER REMOTE_SERVER_PATH)
 for required_value in ${required_values[@]}; do
@@ -17,8 +20,7 @@ for required_value in ${required_values[@]}; do
 done
 
 # Set local settings
-LOCAL_FOLDER="${LOCAL_FOLDER:-./pub/media}"
-LOCAL_PORT="${LOCAL_PORT:-2000}"
+LOCAL_FOLDER="${LOCAL_FOLDER:-./$DIR}"
 
 TIMESTAMP=$( date +%s )
 
@@ -28,8 +30,9 @@ if mount | grep "$REMOTE_SERVER_USER@$REMOTE_SERVER_IP" > /dev/null; then
     echo "ERROR: Remote images were already mounted."
 else
     # Check if the path is valid and get the full path
-    full_path=$(ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}/pub/media > /dev/null 2>&1 && pwd")
-    [ $? -ne 0 ] && echo "ERROR: There may be a typo in the remote path (don't include /pub/media)" && exit;
+    full_path=$(ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}/${DIR} > /dev/null 2>&1 && pwd")
+
+    [ $? -ne 0 ] && echo "ERROR: There may be a typo in the remote path (don't include $DIR)" && exit;
 
     # Check if local folder is empty
     if [ "$(ls -A $LOCAL_FOLDER)" ]; then
