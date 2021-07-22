@@ -10,8 +10,10 @@ then
     exit
 fi
 
-if [ -d "./public/app/uploads" ]; then DIR="public/app/uploads"; fi
-if [ -d "./pub/media" ]; then DIR="pub/media"; fi
+if [ -d "./public/wp" ]; then DIR="public/app/uploads"; fi
+if [ -d "./bin/magento" ]; then DIR="pub/media"; fi
+
+[ -z ${DIR} ] && echo "Project not compatible." && exit
 
 # Verify required values are available.
 required_values=(REMOTE_SERVER_IP REMOTE_SERVER_USER REMOTE_SERVER_PATH)
