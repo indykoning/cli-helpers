@@ -17,5 +17,5 @@ media-link:
 media-list:
 	mount | grep 'osxfuse\|macfuse'
 media-unlink:
-	umount ./pub/media
+	bash $(current_dir)/mk/scripts/media-unlink.sh
 	@echo "Media unmounted"
