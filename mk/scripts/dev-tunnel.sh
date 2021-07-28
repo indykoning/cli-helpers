@@ -11,7 +11,7 @@ then
 fi
 
 if [ -d "./public/wp" ]; then DIR="public/app/uploads"; fi
-if [ -d "./bin/magento" ]; then DIR="pub/media"; fi
+if [ -f "./bin/magento" ]; then DIR="pub/media"; fi
 
 [ -z ${DIR} ] && echo "Project not compatible." && exit
 
