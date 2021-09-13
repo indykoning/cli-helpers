@@ -3,6 +3,8 @@
 # Include all variables from .env file.
 [ -f app/etc/.env ] && source app/etc/.env
 [ -f .env ] && source .env
+[ -f app/etc/.env.${APP_ENV} ] && source app/etc/.env.${APP_ENV}
+[ -f .env.${APP_ENV} ] && source .env.${APP_ENV}
 
 # Verify required values are available.
 required_values=(CMS_URL CATEGORY_URL PRODUCT_URL)
