@@ -6,6 +6,8 @@ if [ -d "./bin/magento" ]; then DIR="pub/media"; fi
 
 [ -f app/etc/.env ] && source app/etc/.env
 [ -f .env ] && source .env
+[ -f app/etc/.env.${APP_ENV} ] && source app/etc/.env.${APP_ENV}
+[ -f .env.${APP_ENV} ] && source .env.${APP_ENV}
 
 if mount | grep "$REMOTE_SERVER_USER@$REMOTE_SERVER_IP" > /dev/null; then
     umount ${DIR}
