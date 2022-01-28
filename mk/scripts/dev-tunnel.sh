@@ -34,7 +34,7 @@ if mount | grep "$REMOTE_SERVER_USER@$REMOTE_SERVER_IP" > /dev/null; then
     echo "ERROR: Remote images were already mounted."
 else
     # Check if the path is valid and get the full path
-    full_path=$(ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}/${DIR} > /dev/null 2>&1 && pwd")
+    full_path=$(ssh $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}/${DIR} > /dev/null 2>&1 && pwd -P")
 
     [ $? -ne 0 ] && echo "ERROR: There may be a typo in the remote path (don't include $DIR)" && exit;
 
