@@ -3,6 +3,7 @@ HELP+=|     REMOTE_SERVER_IP\\n
 HELP+=|     REMOTE_SERVER_USER\\n
 HELP+=|     REMOTE_SERVER_PATH (db-magerun only)\\n
 HELP+=|     MAGERUN_STRIP (db-magerun only)\\n
+HELP+=|     MAGERUN_EXCLUDE (db-magerun only)\\n
 HELP+=|     DB_DATABASE (automysqlbackup only)\\n
 HELP+=|     DB_USERNAME (automysqlbackup only)\\n
 HELP+=|     DB_PASSWORD (automysqlbackup only)\\n
