@@ -7,7 +7,7 @@
 [ -f .env.${APP_ENV} ] && source .env.${APP_ENV}
 
 # Verify required values are available.
-required_values=(DB_DATABASE DB_USERNAME DB_PASSWORD REMOTE_SERVER_IP REMOTE_SERVER_DATABASE)
+required_values=(DB_DATABASE DB_USERNAME REMOTE_SERVER_IP REMOTE_SERVER_DATABASE)
 for required_value in ${required_values[@]}; do
     [ -z ${!required_value} ] && echo "${required_value} is missing!" && exit
 done
