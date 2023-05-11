@@ -21,6 +21,4 @@ if [ "$FORCE_ONLINE_MAGERUN" = true ] ; then
 fi
 
 echo "Downloading database from remote and stripping '${MAGERUN_STRIP}'"
-ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" --exclude=\"${MAGERUN_EXCLUDE}\" --stdout 2> /dev/null" > dump.sql
-magerun2 db:import dump.sql
-rm dump.sql
+ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" --exclude=\"${MAGERUN_EXCLUDE}\" --stdout" | magerun2 db:import /dev/stdin
