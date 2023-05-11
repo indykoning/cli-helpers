@@ -61,3 +61,22 @@ DB_PORT=
 DB_HOST=
 REMOTE_SERVER_DATABASE=
 ```
+### db-mysqldump
+`cli-helpers db-mysqldump` Creates a dump using mysqldump and imports it at the same time
+This imports the database AS it is exporting.
+
+Available environment variables:
+```env
+REMOTE_SERVER_IP=
+REMOTE_SERVER_USER=
+REMOTE_SERVER_DATABASE=
+REMOTE_DB_USERNAME=
+REMOTE_DB_PASSWORD=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+DB_PORT=
+DB_HOST=
+INCLUDE_TABLES=
+EXCLUDE_TABLES=
+```
