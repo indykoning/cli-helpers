@@ -29,4 +29,5 @@ command -v pv &> /dev/null && pv='pv' || pv='cat'
 echo "Importing"
 ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "mysqldump --single-transaction=${SINGLE_TRANSACTION} --user=\"${REMOTE_DB_USERNAME}\" --password=\"${REMOTE_DB_PASSWORD}\" ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}" \
 | ${pv} \
+| sed 's/DEFINER=[^*]*\*/\*/g' \
 | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
