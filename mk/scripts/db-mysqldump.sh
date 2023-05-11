@@ -20,12 +20,14 @@ DB_PORT="${DB_PORT:-3306}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 REMOTE_SERVER_PORT="${REMOTE_SERVER_PORT:-22}"
 REMOTE_SERVER_USER="${REMOTE_SERVER_USER:-root}"
+SINGLE_TRANSACTION="${SINGLE_TRANSACTION:-TRUE}"
 
 # Use PV if available to display progress bar.
 command -v pv &> /dev/null && pv='pv' || pv='cat'
 
 # Import database.
 echo "Importing"
-ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "mysqldump --user=\"${REMOTE_DB_USERNAME}\" --password=\"${REMOTE_DB_PASSWORD}\" ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}" \
+ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "mysqldump --single-transaction=${SINGLE_TRANSACTION} --user=\"${REMOTE_DB_USERNAME}\" --password=\"${REMOTE_DB_PASSWORD}\" ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}" \
 | ${pv} \
+| sed 's/DEFINER=[^*]*\*/\*/g' \
 | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
