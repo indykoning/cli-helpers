@@ -8,7 +8,7 @@ Laravel, Akeneo, Magento 2 and Wordpress projects by adding utility functions th
 Because (almost) all these projects utilise composer we support installing this as a composer package though it's not dependent on php itself (except for the scripts utilising Magerun)
 If you have your global composer in your $PATH (`export PATH=$PATH:$HOME/.composer/vendor/bin`) you can run
 ```bash
-composer global install indykoning/cli-helpers
+composer global require indykoning/cli-helpers
 ```
 after which you should be able to run 
 ```bash
