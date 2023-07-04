@@ -13,7 +13,7 @@ for required_value in ${required_values[@]}; do
 done
 
 # Use MAGERUN_STRIP value, if it does not exist use default values
-MAGERUN_STRIP="${MAGERUN_STRIP:-@2fa @aggregated @customers @idx @log @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp}"
+MAGERUN_STRIP="${MAGERUN_STRIP:-@2fa @aggregated @customers @idx @log @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp amasty_xsearch_users_search}"
 REMOTE_SERVER_PORT="${REMOTE_SERVER_PORT:-22}"
 REMOTE_MAGERUN="${REMOTE_MAGERUN:-magerun2}"
 if [ "$FORCE_ONLINE_MAGERUN" = true ] ; then
