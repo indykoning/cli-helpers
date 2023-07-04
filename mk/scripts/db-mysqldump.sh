@@ -26,8 +26,10 @@ SINGLE_TRANSACTION="${SINGLE_TRANSACTION:-TRUE}"
 command -v pv &> /dev/null && pv='pv' || pv='cat'
 
 # Import database.
-echo "Importing"
+echo -e "SSH connection info: \033[1;33mssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP\033[0m"
+echo -e "Exporting database with \033[1;33mmysqldump --single-transaction=${SINGLE_TRANSACTION} ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}\033[0m and importing..."
 ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "mysqldump --single-transaction=${SINGLE_TRANSACTION} --user=\"${REMOTE_DB_USERNAME}\" --password=\"${REMOTE_DB_PASSWORD}\" ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}" \
 | ${pv} \
-| sed 's/DEFINER=[^*]*\*/\*/g' \
+| LC_ALL=C sed 's/DEFINER=[^*]*\*/\*/g' \
 | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
+echo -e "\033[0;32mImport finished!\033[0m"

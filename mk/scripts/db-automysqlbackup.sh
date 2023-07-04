@@ -18,7 +18,7 @@ DB_HOST="${DB_HOST:-127.0.0.1}"
 
 # Retrieve dump
 latest_dump=$(ssh root@${REMOTE_SERVER_IP} "cd /var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/ && printf '%s\n' ${REMOTE_SERVER_DATABASE}*.sql.gz | tail -1")
-echo "Downloading latest dump ${latest_dump}"
+echo "Downloading latest dump ${latest_dump}..."
 scp root@${REMOTE_SERVER_IP}:/var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/${latest_dump} ./
 
 [ -f ${latest_dump} ] || echo "Could not download dump!"
@@ -29,7 +29,11 @@ command -v gzcat &> /dev/null && zcat='gzcat' || zcat='zcat'
 command -v pv &> /dev/null && pv='pv' || pv='cat'
 
 # Import database.
-echo "Importing"
-${pv} ${latest_dump} | ${zcat} | sed 's/DEFINER=[^*]*\*/\*/g' | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
+echo "Importing..."
+${pv} ${latest_dump} \
+| ${zcat} \
+| LC_ALL=C sed 's/DEFINER=[^*]*\*/\*/g' \
+| mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
 
 rm ${latest_dump}
+echo -e "\033[0;32mImport finished!\033[0m"
