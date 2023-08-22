@@ -5,6 +5,7 @@
 [ -f .env ] && source .env
 [ -f app/etc/.env.${APP_ENV} ] && source app/etc/.env.${APP_ENV}
 [ -f .env.${APP_ENV} ] && source .env.${APP_ENV}
+[ -f ${ENVFILE} ] && source ${ENVFILE}
 
 # Verify required values are available.
 required_values=(DB_DATABASE DB_USERNAME REMOTE_SERVER_IP REMOTE_SERVER_DATABASE REMOTE_DB_USERNAME)
