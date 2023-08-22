@@ -24,6 +24,7 @@ ln -s `pwd`/cli-helpers/bin/cli-helpers /usr/local/bin/cli-helpers
 ```
 
 ## Commands
+You can define a custom env file to use by prepending `ENVFILE=".env.custom"` to the command
 Our current list of available commands are
 
 ### db-magerun
