@@ -81,3 +81,5 @@ DB_HOST=
 INCLUDE_TABLES=
 EXCLUDE_TABLES=
 ```
+> [!NOTE]  
+> `INCLUDE_TABLES` and `EXCLUDE_TABLES` are space separated. E.g. `EXCLUDE_TABLES="table_one table_two"`
