@@ -5,13 +5,17 @@
 [ -f .env ] && source .env
 [ -f app/etc/.env.${APP_ENV} ] && source app/etc/.env.${APP_ENV}
 [ -f .env.${APP_ENV} ] && source .env.${APP_ENV}
-[ -f ${ENVFILE} ] && source ${ENVFILE}
+[ -n "$ENVFILE" ] && [ -f ${ENVFILE} ] && source ${ENVFILE}
 
 # Verify required values are available.
 required_values=(REMOTE_SERVER_IP REMOTE_SERVER_USER REMOTE_SERVER_PATH)
 for required_value in ${required_values[@]}; do
     [ -z ${!required_value} ] && echo "${required_value} is missing!" && exit
 done
+
+[ -n "$MAGERUN_EXCLUDE" ] && EXCLUDE_TABLES=$MAGERUN_EXCLUDE;
+[ -n "$EXCLUDE_TABLES" ] && EXCLUDE_TABLES="--exclude=\"${EXCLUDE_TABLES}\"";
+[ -n "$INCLUDE_TABLES" ] && INCLUDE_TABLES="--include=\"${INCLUDE_TABLES}\"";
 
 # Use MAGERUN_STRIP value, if it does not exist use default values
 MAGERUN_STRIP="${MAGERUN_STRIP:-@2fa @aggregated @customers @idx @log @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp amasty_xsearch_users_search xtento_*_profile_history xtento_*_log sync_log}"
@@ -23,5 +27,5 @@ if [ "$FORCE_ONLINE_MAGERUN" = true ] ; then
 fi
 
 echo -e "SSH connection info: \033[1;33mssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP\033[0m"
-echo -e "Running \033[1;33m${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" --exclude=\"${MAGERUN_EXCLUDE}\"\033[0m and importing..."
-ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" --exclude=\"${MAGERUN_EXCLUDE}\" --stdout" | ${LOCAL_MAGERUN} db:import /dev/stdin
+echo -e "Running \033[1;33m${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES}\033[0m and importing..."
+ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES} --stdout" | ${LOCAL_MAGERUN} db:import /dev/stdin

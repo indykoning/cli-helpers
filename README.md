@@ -44,8 +44,10 @@ REMOTE_MAGERUN="magerun2"
 FORCE_ONLINE_MAGERUN=false
 # Tables to strip the data from using mageruns --strip option https://github.com/netz98/n98-magerun2#stripped-database-dump
 MAGERUN_STRIP="@2fa @aggregated @customers @idx @log @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp"
+# Tables to only include
+INCLUDE_TABLES=
 # Tables to skip entirely
-MAGERUN_EXCLUDE=
+EXCLUDE_TABLES=
 ```
 
 ### db-automysqlbackup
