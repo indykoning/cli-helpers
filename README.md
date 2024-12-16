@@ -23,6 +23,8 @@ chmod +x cli-helpers/bin/cli-helpers
 ln -s `pwd`/cli-helpers/bin/cli-helpers /usr/local/bin/cli-helpers
 ```
 
+> **Tip!** Install `pv` to get a progress bar when importing and exporting databases
+
 ## Commands
 You can define a custom env file to use by prepending `ENVFILE=".env.custom"` to the command
 Our current list of available commands are
@@ -85,3 +87,10 @@ EXCLUDE_TABLES=
 ```
 > [!NOTE]  
 > `INCLUDE_TABLES` and `EXCLUDE_TABLES` are space separated. E.g. `EXCLUDE_TABLES="table_one table_two"`
+
+
+## Anonymizing the database
+
+To anonymize the database [dbanon](https://github.com/mdshack/dbanon) is used. You can enable it by setting `ANONYMIZE=true` in your `.env` file. 
+
+You can optionally set the config file path by setting `DBANON_CONFIG` in your `.env` file. If not set, `dbanon.yml` in the root of your project will be used.

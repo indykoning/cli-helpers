@@ -22,6 +22,9 @@ DB_HOST="${DB_HOST:-127.0.0.1}"
 REMOTE_SERVER_PORT="${REMOTE_SERVER_PORT:-22}"
 REMOTE_SERVER_USER="${REMOTE_SERVER_USER:-root}"
 SINGLE_TRANSACTION="${SINGLE_TRANSACTION:-TRUE}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${SCRIPT_DIR}/anonymizer.sh"
 
 # Use PV if available to display progress bar.
 command -v pv &> /dev/null && pv='pv' || pv='cat'
@@ -32,5 +35,6 @@ echo -e "Exporting database with \033[1;33mmysqldump --single-transaction=${SING
 ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "mysqldump --single-transaction=${SINGLE_TRANSACTION} --user=\"${REMOTE_DB_USERNAME}\" --password=\"${REMOTE_DB_PASSWORD}\" ${REMOTE_SERVER_DATABASE} ${INCLUDE_TABLES} ${EXCLUDE_TABLES}" \
 | ${pv} \
 | LC_ALL=C sed 's/DEFINER=[^*]*\*/\*/g' \
+| ${anonymizer} \
 | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
 echo -e "\033[0;32mImport finished!\033[0m"

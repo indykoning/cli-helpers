@@ -16,6 +16,9 @@ done
 # Set default value if env variables do not exist
 DB_PORT="${DB_PORT:-3306}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${SCRIPT_DIR}/anonymizer.sh"
 
 # Retrieve dump
 latest_dump=$(ssh root@${REMOTE_SERVER_IP} "cd /var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/ && printf '%s\n' ${REMOTE_SERVER_DATABASE}*.sql.gz | tail -1")
@@ -33,6 +36,7 @@ command -v pv &> /dev/null && pv='pv' || pv='cat'
 echo "Importing..."
 ${pv} ${latest_dump} \
 | ${zcat} \
+| ${anonymizer} \
 | LC_ALL=C sed 's/DEFINER=[^*]*\*/\*/g' \
 | mysql --user="${DB_USERNAME}" --password="${DB_PASSWORD}" --port=${DB_PORT} --host=${DB_HOST} ${DB_DATABASE}
 
