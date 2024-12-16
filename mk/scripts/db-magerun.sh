@@ -30,12 +30,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 source "${SCRIPT_DIR}/anonymizer.sh"
 
-# Use PV if available to display progress bar.
-command -v pv &> /dev/null && pv='pv' || pv='cat'
-
 echo -e "SSH connection info: \033[1;33mssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP\033[0m"
 echo -e "Running \033[1;33m${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES}\033[0m and importing..."
 ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES} --stdout" \
 | ${anonymizer} \
-| ${pv} \
 | ${LOCAL_MAGERUN} db:import /dev/stdin
