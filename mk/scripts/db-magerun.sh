@@ -34,4 +34,4 @@ echo -e "SSH connection info: \033[1;33mssh -p $REMOTE_SERVER_PORT $REMOTE_SERVE
 echo -e "Running \033[1;33m${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES}\033[0m and importing..."
 ssh -p $REMOTE_SERVER_PORT $REMOTE_SERVER_USER@$REMOTE_SERVER_IP "cd ${REMOTE_SERVER_PATH}; ${REMOTE_MAGERUN} db:dump --strip=\"${MAGERUN_STRIP}\" ${INCLUDE_TABLES} ${EXCLUDE_TABLES} --stdout" \
 | ${anonymizer} \
-| ${LOCAL_MAGERUN} db:import /dev/stdin
+| ${LOCAL_MAGERUN} db:import --compression=none /dev/stdin
