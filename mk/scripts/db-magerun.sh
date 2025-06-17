@@ -18,7 +18,7 @@ done
 [ -n "$INCLUDE_TABLES" ] && INCLUDE_TABLES="--include=\"${INCLUDE_TABLES}\"";
 
 # Use MAGERUN_STRIP value, if it does not exist use default values
-MAGERUN_STRIP="${MAGERUN_STRIP:-@2fa @aggregated @customers @idx @log @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp amasty_xsearch_users_search xtento_*_profile_history xtento_*_log sync_log}"
+MAGERUN_STRIP="${MAGERUN_STRIP:-@2fa @aggregated @customers @idx @klarna @log @mailchimp @newrelic_reporting @oauth @quotes @replica @sales @search @sessions @stripped @trade @temp amasty_xsearch_users_search xtento_*_profile_history xtento_*_log sync_log magento_operation magento_bulk queue_*}"
 REMOTE_SERVER_PORT="${REMOTE_SERVER_PORT:-22}"
 REMOTE_MAGERUN="${REMOTE_MAGERUN:-magerun2}"
 LOCAL_MAGERUN="${LOCAL_MAGERUN:-magerun2}"
