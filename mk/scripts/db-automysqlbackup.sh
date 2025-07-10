@@ -14,6 +14,7 @@ for required_value in ${required_values[@]}; do
 done
 
 # Set default value if env variables do not exist
+REMOTE_SERVER_PORT="${REMOTE_SERVER_PORT:-22}"
 DB_PORT="${DB_PORT:-3306}"
 DB_HOST="${DB_HOST:-127.0.0.1}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -21,9 +22,9 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/anonymizer.sh"
 
 # Retrieve dump
-latest_dump=$(ssh root@${REMOTE_SERVER_IP} "cd /var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/ && printf '%s\n' ${REMOTE_SERVER_DATABASE}*.sql.gz | tail -1")
+latest_dump=$(ssh -p $REMOTE_SERVER_PORT root@${REMOTE_SERVER_IP} "cd /var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/ && printf '%s\n' ${REMOTE_SERVER_DATABASE}*.sql.gz | tail -1")
 echo "Downloading latest dump ${latest_dump}..."
-scp root@${REMOTE_SERVER_IP}:/var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/${latest_dump} ./
+scp -P $REMOTE_SERVER_PORT root@${REMOTE_SERVER_IP}:/var/lib/automysqlbackup/daily/${REMOTE_SERVER_DATABASE}/${latest_dump} ./
 
 [ -f ${latest_dump} ] || echo "Could not download dump!"
 
